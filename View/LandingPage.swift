@@ -8,49 +8,25 @@
 import SwiftUI
 
 struct LandingPage: View {
-    @State private var selection = 1
     @State private var showAddMemory = false
-    
-    @State private var memories = MemoryData.memories
-        .sorted { $0.date > $1.date }
 
     var body: some View {
-        ZStack(alignment: .bottomTrailing) {
-
-            TabView(selection: $selection) {
-                MemoriesCalendarPage(memories: $memories)
-                    .tabItem {
-                        Label("Calendar", systemImage: "calendar")
-                    }
-                    .tag(1)
-
-                MemoriesListPage(memories: $memories)
-                    .tabItem {
-                        Label("List", systemImage: "list.bullet")
-                    }
-                    .tag(2)
+        TabView {
+            Tab("Calendar", systemImage: "calendar") {
+                MemoriesCalendarPage(onAdd: { showAddMemory = true })
             }
-
-            Button {
-                showAddMemory = true
-            } label: {
-                Image(systemName: "plus")
-                    .font(.title2)
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(Color.blue)
-                    .clipShape(Circle())
-                    .shadow(radius: 5)
+            Tab("Memories", systemImage: "photo.on.rectangle.angled") {
+                MemoriesListPage(onAdd: { showAddMemory = true })
             }
-            .padding(20)
-            
-            .sheet(isPresented: $showAddMemory) {
-                AddMemoryPage()
-            }
+        }
+        .sheet(isPresented: $showAddMemory) {
+            AddMemoryPage()
         }
     }
 }
 
 #Preview {
     LandingPage()
+        .environment(MemoryStore())
+        .tint(Theme.accent)
 }

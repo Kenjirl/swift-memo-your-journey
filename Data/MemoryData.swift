@@ -11,7 +11,7 @@ struct MemoryData {
     static let memories: [MemoryModel] = [
         MemoryModel(
             title: "Beach Day",
-            location: "Bali, Nusa Dua Beach",
+            location: "Indonesia, Nusa Dua Beach",
             description: "Going to the beach in Bali, called Nusa Dua Beach",
             date: Date.daysAgo(14),
             imageName: "beach",
